@@ -1,15 +1,25 @@
-class Money  {
-    protected int amount;
-   
-    public boolean equals(Object object)  {
-      Money money = (Money) object;
-      return amount == money.amount;
-    }
-    public void testEquality() {
-      assertTrue(new Dollar(5).equals(new Dollar(5)));
-      assertFalse(new Dollar(5).equals(new Dollar(6)));
-      assertTrue(new Franc(5).equals(new Franc(5)));
-      assertFalse(new Franc(5).equals(new Franc(6)));
-    }
+class Money {
+  private String currency; 
 
+  static Money dollar(int amount)  {
+    return new Dollar(amount, "USD");
+  }
+	
+  static Money franc(int amount) {
+    return new Franc(amount, "CHF");
+  }
+    
+  Money(int amount, String currency) {
+    this.amount = amount;
+    this.currency = currency;
+  }
+	
+  public boolean equals(Object object) {
+    Money money = (Money) object;
+    return amount == money.amount && currency().equals(money.currency());
+  }
+	
+  Money times(int multiplier) {
+    return new Money(amount * multiplier, currency);
+  }
 }
